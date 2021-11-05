@@ -17,6 +17,7 @@ message RelCommon {
 
     Hint hint = 3;
     RuntimeConstraint constraint = 4;
+    Distribution distribution = 5;
 
     message Direct {}
     message Emit {
@@ -24,7 +25,7 @@ message RelCommon {
     }
 
     message Hint {
-        repeated HintKeyValue hint_key_values = 1;
+        repeated HintKeyValue hint_key_values= 1;
         Stats stats = 2;
 
         message Stats {
@@ -43,6 +44,15 @@ message RelCommon {
         // TODO: nodes, cpu threads/%, memory, iops, etc.
     }
 
+    message Distribution {
+       enum DISTRIBUTION_TYPE {
+          PARTITIONED = 0;
+          SINGLETON = 1;
+       }
+
+       repeated Expression.DistributionField d_field = 1;
+       DISTRIBUTION_TYPE d_type = 2;
+    }
 }
 
 message ReadRel {
@@ -93,6 +103,7 @@ message DistributeRel {
     Rel input = 2;
     Expression expressions = 3;
     int32 partitionCount = 4;
+    bool broadcast = 5;
 }
 
 message ProjectRel {

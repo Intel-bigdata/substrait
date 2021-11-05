@@ -146,6 +146,14 @@ message Expression {
 
     }
 
+    message DistributionField {
+        Expression expr = 1;
+
+        oneof distribution_kind {
+            Extensions.FunctionId distribution_function = 2;
+        }
+    }
+
     message SortField {
         Expression expr = 1;
 
