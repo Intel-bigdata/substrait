@@ -88,6 +88,13 @@ message ReadRel {
 
 }
 
+message DistributeRel {
+    RelCommon common = 1;
+    Rel input = 2;
+    Expression expressions = 3;
+    int32 partitionCount = 4;
+}
+
 message ProjectRel {
     RelCommon common = 1;
     Rel input = 2;
@@ -171,5 +178,6 @@ message Rel {
       JoinRel join = 6;
       ProjectRel project = 7;
       SetRel set = 8;
+      DistributeRel distribute = 9;
   }
 }
