@@ -103,7 +103,13 @@ message DistributeRel {
     Rel input = 2;
     Expression expressions = 3;
     int32 partitionCount = 4;
-    bool broadcast = 5;
+    DistributeType type = 5;
+    repeated Expression.DistributionField d_field = 6;
+
+    enum DistributeType {
+        boradcast = 0;
+        scatter = 1;
+    }
 }
 
 message ProjectRel {
