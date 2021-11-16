@@ -149,14 +149,15 @@ message Type {
 
     message Struct {
         repeated Type types = 1;
-        Variation variation = 2;
-        Nullability nullability = 3;
+        repeated Variation variation = 2;
+        repeated Nullability nullability = 3;
     }
 
     message NamedStruct {
         // list of names in dfs order
-        repeated string names = 1;
-        Struct struct = 2;
+        repeated int32 index = 1;
+        repeated string names = 2;
+        Struct struct = 3;
     }
 
     message List {

@@ -21,8 +21,13 @@ message RelCommon {
 
     message Direct {}
     message Emit {
-        repeated int32 output_mapping = 1;
+        repeated Type.NamedStruct output_mapping = 1;
     }
+/*    message ColInfo {
+        int32 index = 1;
+        string name = 2;
+        Type type = 3;
+    }*/
 
     message Hint {
         repeated HintKeyValue hint_key_values= 1;
@@ -104,7 +109,7 @@ message DistributeRel {
     Expression expressions = 3;
     int32 partitionCount = 4;
     DistributeType type = 5;
-    repeated Expression.DistributionField d_field = 6;
+    Expression.DistributionField d_field = 6;
 
     enum DistributeType {
         boradcast = 0;
