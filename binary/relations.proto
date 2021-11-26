@@ -23,11 +23,6 @@ message RelCommon {
     message Emit {
         repeated Type.NamedStruct output_mapping = 1;
     }
-/*    message ColInfo {
-        int32 index = 1;
-        string name = 2;
-        Type type = 3;
-    }*/
 
     message Hint {
         repeated HintKeyValue hint_key_values= 1;
@@ -159,6 +154,7 @@ message AggregateRel {
 
     message Measure {
         Expression.AggregateFunction measure = 1;
+        Type.NamedStruct mask = 2;
     }
 }
 
