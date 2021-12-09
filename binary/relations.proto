@@ -154,7 +154,7 @@ message AggregateRel {
 
     message Measure {
         Expression.AggregateFunction measure = 1;
-        Type.NamedStruct mask = 2;
+        Expression mask = 2;
     }
 }
 

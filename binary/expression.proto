@@ -19,6 +19,7 @@ message Expression {
         SingularOrList singular_or_list = 8;
         MultiOrList multi_or_list = 9;
         Enum enum = 10;
+        Cast cast = 11;
     }
 
     message Enum {
@@ -182,6 +183,11 @@ message Expression {
             Expression then = 2;
         }
 
+    }
+
+    message Cast {
+        Type type = 1;
+        Expression input = 2;
     }
 
     message SwitchExpression {
