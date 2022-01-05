@@ -152,7 +152,7 @@ message AggregateRel {
     message Grouping { repeated Expression grouping_expressions = 1; }
 
     message Measure {
-        AggregateFunction measure = 1;
+        Expression.AggregateFunction measure = 1;
 
         // An optional boolean expression that acts to filter which records are
         // included in the measure. True means include this record for calculation
