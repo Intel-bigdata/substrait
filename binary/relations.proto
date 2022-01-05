@@ -146,15 +146,18 @@ message AggregateRel {
     Rel input = 2;
     repeated Grouping groupings = 3;
     repeated Measure measures = 4;
-    Expression.AggregationPhase phase = 5;
 
-    message Grouping {
-        repeated int32 input_fields = 1;
-    }
+    //substrait.extensions.AdvancedExtension advanced_extension = 10;
+
+    message Grouping { repeated Expression grouping_expressions = 1; }
 
     message Measure {
-        Expression.AggregateFunction measure = 1;
-        Expression mask = 2;
+        AggregateFunction measure = 1;
+
+        // An optional boolean expression that acts to filter which records are
+        // included in the measure. True means include this record for calculation
+        // within the measure.
+        Expression filter = 2;
     }
 }
 
