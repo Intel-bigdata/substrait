@@ -25,7 +25,7 @@ message RelCommon {
     }
 
     message Hint {
-        repeated HintKeyValue hint_key_values= 1;
+        repeated HintKeyValue hint_key_values = 1;
         Stats stats = 2;
 
         message Stats {
