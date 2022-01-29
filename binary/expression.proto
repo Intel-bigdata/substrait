@@ -19,6 +19,7 @@ message Expression {
         SingularOrList singular_or_list = 8;
         MultiOrList multi_or_list = 9;
         Enum enum = 10;
+        Cast cast = 11;
     }
 
     message Enum {
@@ -103,11 +104,11 @@ message Expression {
     }
 
     enum AggregationPhase {
-        UNKNOWN = 0;
-        INITIAL_TO_INTERMEDIATE = 1;
-        INTERMEDIATE_TO_INTERMEDIATE = 2;
-        INITIAL_TO_RESULT = 3;
-        INTERMEDIATE_TO_RESULT = 4;
+        AGGREGATION_PHASE_UNSPECIFIED = 0;
+        AGGREGATION_PHASE_INITIAL_TO_INTERMEDIATE = 1;
+        AGGREGATION_PHASE_INTERMEDIATE_TO_INTERMEDIATE = 2;
+        AGGREGATION_PHASE_INITIAL_TO_RESULT = 3;
+        AGGREGATION_PHASE_INTERMEDIATE_TO_RESULT = 4;
     }
 
 
@@ -146,6 +147,14 @@ message Expression {
 
     }
 
+    message DistributionField {
+        Expression expr = 1;
+
+        oneof distribution_kind {
+            Extensions.FunctionId distribution_function = 2;
+        }
+    }
+
     message SortField {
         Expression expr = 1;
 
@@ -174,6 +183,11 @@ message Expression {
             Expression then = 2;
         }
 
+    }
+
+    message Cast {
+        Type type = 1;
+        Expression input = 2;
     }
 
     message SwitchExpression {

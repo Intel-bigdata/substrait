@@ -17,10 +17,11 @@ message RelCommon {
 
     Hint hint = 3;
     RuntimeConstraint constraint = 4;
+    Distribution distribution = 5;
 
     message Direct {}
     message Emit {
-        repeated int32 output_mapping = 1;
+        repeated Type.NamedStruct output_mapping = 1;
     }
 
     message Hint {
@@ -43,6 +44,15 @@ message RelCommon {
         // TODO: nodes, cpu threads/%, memory, iops, etc.
     }
 
+    message Distribution {
+       enum DISTRIBUTION_TYPE {
+          PARTITIONED = 0;
+          SINGLETON = 1;
+       }
+
+       repeated Expression.DistributionField d_field = 1;
+       DISTRIBUTION_TYPE d_type = 2;
+    }
 }
 
 message ReadRel {
@@ -88,6 +98,20 @@ message ReadRel {
 
 }
 
+message DistributeRel {
+    RelCommon common = 1;
+    Rel input = 2;
+    Expression expressions = 3;
+    int32 partitionCount = 4;
+    DistributeType type = 5;
+    Expression.DistributionField d_field = 6;
+
+    enum DistributeType {
+        boradcast = 0;
+        scatter = 1;
+    }
+}
+
 message ProjectRel {
     RelCommon common = 1;
     Rel input = 2;
@@ -122,14 +146,18 @@ message AggregateRel {
     Rel input = 2;
     repeated Grouping groupings = 3;
     repeated Measure measures = 4;
-    Expression.AggregationPhase phase = 5;
 
-    message Grouping {
-        repeated int32 input_fields = 1;
-    }
+    //substrait.extensions.AdvancedExtension advanced_extension = 10;
+
+    message Grouping { repeated Expression grouping_expressions = 1; }
 
     message Measure {
         Expression.AggregateFunction measure = 1;
+
+        // An optional boolean expression that acts to filter which records are
+        // included in the measure. True means include this record for calculation
+        // within the measure.
+        Expression filter = 2;
     }
 }
 
@@ -171,5 +199,6 @@ message Rel {
       JoinRel join = 6;
       ProjectRel project = 7;
       SetRel set = 8;
+      DistributeRel distribute = 9;
   }
 }
